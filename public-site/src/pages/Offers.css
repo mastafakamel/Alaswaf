@@ -1,0 +1,631 @@
+/* ===========================
+   Offers Page Styles
+   =========================== */
+
+/* Page header styles are now in globals.css */
+
+/* Offers Layout */
+.offers-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-8);
+    padding: var(--space-8) 0;
+}
+
+/* Filters Sidebar */
+.filters-sidebar {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+    height: fit-content;
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-4));
+}
+
+.filters-sidebar__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 2px solid var(--color-gray-200);
+}
+
+.filters-sidebar__header h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+}
+
+.filters-sidebar__clear {
+    font-size: var(--font-size-sm);
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+}
+
+.filters-sidebar__clear:hover {
+    background: rgba(232, 104, 48, 0.1);
+    transform: scale(1.05);
+}
+
+/* Filter Group */
+.filter-group {
+    margin-bottom: var(--space-6);
+}
+
+.filter-group:last-child {
+    margin-bottom: 0;
+}
+
+.filter-group__title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: right;
+    border: 1.5px solid var(--color-gray-200);
+    background: var(--color-white);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+}
+
+.filter-option:hover {
+    background: rgba(45, 140, 206, 0.05);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: translateX(-3px);
+    box-shadow: 0 2px 8px rgba(45, 140, 206, 0.12);
+}
+
+.filter-option--active {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1E6BA8 100%);
+    color: white;
+    border-color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+    box-shadow: 0 4px 12px rgba(45, 140, 206, 0.25);
+}
+
+/* Prominent Filter Group (Cities) - Matching Category styling */
+.filter-group--prominent {
+    padding: 0;
+    margin-bottom: var(--space-8);
+}
+
+.filter-group--prominent .filter-group__title {
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.filter-group--prominent .filter-option--active {
+    box-shadow: 0 4px 12px rgba(45, 140, 206, 0.25);
+}
+
+.filter-option--active:hover {
+    transform: translateX(-3px);
+    box-shadow: 0 6px 16px rgba(45, 140, 206, 0.35);
+}
+
+.filter-option span {
+    font-size: 1.15em;
+    transition: transform 0.2s ease;
+}
+
+.filter-option:hover span,
+.filter-option--active span {
+    transform: scale(1.08);
+}
+
+/* Offers Toolbar */
+.offers-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+    padding: var(--space-5);
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-gray-200);
+}
+
+.offers-toolbar__count {
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+.offers-toolbar__sort {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.offers-toolbar__sort label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    white-space: nowrap;
+    font-weight: var(--font-weight-medium);
+}
+
+.offers-toolbar__sort .form-input {
+    width: auto;
+    min-width: 180px;
+    padding: var(--space-3) var(--space-4);
+    border: 1.5px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-medium);
+    transition: all 0.2s ease;
+}
+
+.offers-toolbar__sort .form-input:hover {
+    border-color: var(--color-primary);
+}
+
+.offers-toolbar__sort .form-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(45, 140, 206, 0.1);
+}
+
+/* Offers Grid - Override for 3 columns in listing */
+.offers-page .offers-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Floating Info Strip - Offers Page */
+.offers-page .offer-card__floating-info {
+    position: relative;
+    margin-top: -24px;
+    background: #ffffff;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.offers-page .info-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-1);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.offers-page .info-item svg {
+    color: var(--color-primary);
+    width: 18px;
+    height: 18px;
+    margin-bottom: 2px;
+}
+
+.offers-page .info-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--color-gray-200);
+}
+
+/* Offer Card - Clean Modern Style */
+.offers-page .offer-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #fff;
+    overflow: hidden;
+    border-radius: var(--radius-2xl);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+}
+
+.offers-page .offer-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    border-color: var(--color-primary);
+}
+
+.offers-page .offer-card .card-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.offers-page .offer-card .card-image img {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.offers-page .offer-card:hover .card-image img {
+    transform: scale(1.08);
+}
+
+.offers-page .offer-card .card-body {
+    padding: var(--space-5);
+}
+
+/* Offer Card Enhancements */
+.offer-card__category {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+}
+
+.offer-card__featured {
+    position: absolute;
+    top: var(--space-4);
+    left: var(--space-4);
+    z-index: 3;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+}
+
+.offer-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
+.offer-tag-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #f0f7ff;
+    color: #007bff;
+    border: 1px solid #dbeafe;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.offer-card__price {
+    display: flex;
+    flex-direction: column;
+}
+
+.offer-card__price-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+    padding: var(--space-5);
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-gray-200);
+}
+
+.pagination__btn {
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    background: white;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.pagination__btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1E6BA8 100%);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(45, 140, 206, 0.25);
+}
+
+.pagination__btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: var(--color-gray-300);
+    color: var(--color-gray-400);
+}
+
+.pagination__pages {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.pagination__page {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-secondary);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1.5px solid transparent;
+}
+
+.pagination__page:hover {
+    background: rgba(45, 140, 206, 0.08);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: scale(1.1);
+}
+
+.pagination__page--active {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1E6BA8 100%);
+    color: white;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(45, 140, 206, 0.3);
+    transform: scale(1.1);
+}
+
+.pagination__page--active:hover {
+    box-shadow: 0 6px 16px rgba(45, 140, 206, 0.4);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: var(--space-16);
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+}
+
+.empty-state__icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-4);
+}
+
+.empty-state h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-6);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .offers-page .offers-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Layout adjustments */
+    .offers-layout {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+
+    /* Filters sidebar becomes horizontal */
+    .filters-sidebar {
+        position: static;
+        margin-bottom: var(--space-6);
+        padding: var(--space-4);
+    }
+
+    .filters-sidebar__header {
+        margin-bottom: var(--space-4);
+    }
+
+    .filters-sidebar__header h3 {
+        font-size: var(--font-size-base);
+    }
+
+    /* Filter groups stacked */
+    .filter-group {
+        margin-bottom: var(--space-4);
+    }
+
+    .filter-group__title {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--space-2);
+    }
+
+    /* Filter options as chips */
+    .filter-options {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .filter-option {
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-full);
+        font-size: 0.9rem;
+        flex: 0 0 auto;
+        border-width: 2px;
+    }
+
+    .filter-group--prominent .filter-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-3);
+    }
+
+    .filter-group--prominent .filter-option {
+        padding: var(--space-3) var(--space-4);
+        font-size: 1rem;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .filter-group--prominent .filter-option--active {
+        box-shadow: 0 4px 12px rgba(45, 140, 206, 0.3);
+    }
+
+    .filter-option span {
+        font-size: 1em;
+    }
+
+    /* Offers grid single column */
+    .offers-page .offers-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+
+    /* Toolbar stacked */
+    .offers-toolbar {
+        flex-direction: column;
+        gap: var(--space-3);
+        align-items: stretch;
+        padding: var(--space-4);
+    }
+
+    .offers-toolbar__count {
+        font-size: var(--font-size-base);
+        text-align: center;
+    }
+
+    .offers-toolbar__sort {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .offers-toolbar__sort label {
+        font-size: 0.8rem;
+    }
+
+    .offers-toolbar__sort .form-input {
+        flex: 1;
+        min-width: auto;
+        font-size: 0.85rem;
+    }
+
+    /* Pagination stacked */
+    .pagination {
+        flex-direction: column;
+        gap: var(--space-4);
+        padding: var(--space-4);
+    }
+
+    .pagination__btn {
+        width: 100%;
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .pagination__pages {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-1);
+    }
+
+    .pagination__page {
+        width: 38px;
+        height: 38px;
+        font-size: 0.85rem;
+    }
+
+    /* Card improvements for mobile */
+    .offer-card .card-image {
+        height: 200px;
+    }
+
+    .offer-card__floating-info {
+        padding: var(--space-2) var(--space-3);
+        gap: var(--space-2);
+    }
+
+    .info-item {
+        font-size: 0.75rem;
+    }
+
+    .info-item svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .card-title {
+        font-size: var(--font-size-base);
+    }
+
+    .card-text {
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    .filters-sidebar {
+        padding: var(--space-3);
+    }
+
+    .filter-option {
+        padding: var(--space-1) var(--space-2);
+        font-size: 0.75rem;
+    }
+
+    .offers-toolbar {
+        padding: var(--space-3);
+    }
+
+    .pagination {
+        padding: var(--space-3);
+    }
+
+    .pagination__pages {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .offer-card .card-image {
+        height: 180px;
+    }
+}

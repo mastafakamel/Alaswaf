@@ -1,0 +1,394 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/**
+ * =========================
+ * Auth (Admin only)
+ * =========================
+ */
+model Admin {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  role         AdminRole @default(ADMIN)
+  isActive     Boolean   @default(true)
+  
+  // Auditing
+  lastLoginAt  DateTime?
+  lastLoginIp  String?
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+enum AdminRole {
+  ADMIN
+  EDITOR
+}
+
+/**
+ * =========================
+ * Cities (Dynamic Locations)
+ * =========================
+ */
+model City {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  branches Branch[]
+  offers   Offer[]
+}
+
+/**
+ * =========================
+ * Branches
+ * =========================
+ */
+model Branch {
+  id           String        @id @default(cuid())
+  
+  cityId       String
+  city         City          @relation(fields: [cityId], references: [id])
+
+  label        String
+  address      String?       @default("")
+  mapUrl            String?       @default("")
+  whatsappE164      String
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  phones BranchPhone[]
+}
+
+model BranchPhone {
+  id        String  @id @default(cuid())
+  branchId  String
+  label     String? @default("") // مثال: "مكتب", "خدمة العملاء"
+  phone     String // يفضل تخزينه بصيغة E164 لو هتعمل توحيد لاحقًا
+  sortOrder Int     @default(0)
+
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  @@index([branchId])
+}
+
+/**
+ * =========================
+ * Tags
+ * =========================
+ */
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  offers OfferTag[]
+}
+
+/**
+ * =========================
+ * Categories (Dynamic Categories)
+ * =========================
+ */
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  icon      String?  @default("🕋") // Default icon
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  offers Offer[]
+}
+
+/**
+ * =========================
+ * Offers
+ * =========================
+ */
+model Offer {
+  id            String        @id @default(cuid())
+  title         String
+  slug          String        @unique
+  summary       String?       @default("") // ملخص قصير للـ cards
+  description   String?       @default("") // Rich text (HTML/Markdown) حسب اختيارك
+  price         Int
+  currency      String        @default("SAR")
+  
+  // Dynamic City
+  departureCityId String
+  departureCity   City     @relation(fields: [departureCityId], references: [id])
+
+  categoryId      String
+  category        Category @relation(fields: [categoryId], references: [id])
+
+  startDate     DateTime?
+  endDate       DateTime?
+  
+  // Hijri Dates (Primary)
+  startDateHijriYear   Int?
+  startDateHijriMonth  Int?
+  startDateHijriDay    Int?
+  endDateHijriYear     Int?
+  endDateHijriMonth    Int?
+  endDateHijriDay      Int?
+  
+  isActive      Boolean       @default(true)
+  featured      Boolean       @default(false)
+
+  // Soft Delete
+  deletedAt     DateTime?
+
+  // Quick facts (زي tebatravel style)
+  durationDays       Int? // مثال: 5
+  durationNights     Int? // مثال: 4
+  offerType          OfferType @default(GROUP) // GROUP/PRIVATE
+  runText            String?   @default("") // Every day / Sundays...
+  pickupInfo         String?   @default("")
+  cancellationPolicy String?   @default("")
+
+  // SEO
+  metaTitle       String? @default("")
+  metaDescription String? @default("")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  images OfferImage[]
+  tags   OfferTag[]
+
+  itinerary   OfferItinerary[]
+  highlights  OfferHighlight[]
+  includes    OfferInclude[]
+  excludes    OfferExclude[]
+  whatToBring OfferWhatToBring[]
+
+  priceTiers OfferPriceTier[]
+  leads      Lead[]
+
+  @@index([isActive, categoryId, departureCityId])
+  @@index([deletedAt]) // For filtering active
+}
+
+enum OfferType {
+  GROUP
+  PRIVATE
+}
+
+/**
+ * =========================
+ * Offer <-> Tag (M:N)
+ * =========================
+ */
+model OfferTag {
+  offerId String
+  tagId   String
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  tag   Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([offerId, tagId])
+  @@index([tagId])
+}
+
+/**
+ * =========================
+ * Offer Images (URLs now, Upload later)
+ * =========================
+ */
+model OfferImage {
+  id        String   @id @default(cuid())
+  offerId   String
+  url       String
+  alt       String?  @default("")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([offerId])
+}
+
+model Lead {
+  id        String     @id @default(cuid())
+  offerId   String?
+  name      String?    @default("")
+  phone     String?    @default("")
+  message   String?    @default("")
+  source    LeadSource
+  
+  // Lead Management
+  status    LeadStatus @default(PENDING)
+  notes     String?    @default("")
+  deletedAt DateTime?
+
+  createdAt DateTime   @default(now())
+
+  offer Offer? @relation(fields: [offerId], references: [id], onDelete: SetNull)
+
+  @@index([offerId])
+  @@index([source])
+  @@index([createdAt])
+  @@index([status])
+}
+
+enum LeadSource {
+  WHATSAPP
+  CONTACT
+}
+
+enum LeadStatus {
+  PENDING
+  CONTACTED
+  CONVERTED
+  CLOSED
+}
+
+/**
+ * =========================
+ * Offer Itinerary
+ * =========================
+ */
+model OfferItinerary {
+  id          String  @id @default(cuid())
+  offerId     String
+  dayNumber   Int
+  title       String
+  description String? @default("")
+  imageUrl    String? @default("")
+  sortOrder   Int     @default(0)
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@unique([offerId, dayNumber])
+  @@index([offerId])
+}
+
+/**
+ * =========================
+ * Offer Lists (Highlights/Includes/Excludes/WhatToBring)
+ * =========================
+ */
+model OfferHighlight {
+  id        String @id @default(cuid())
+  offerId   String
+  text      String
+  sortOrder Int    @default(0)
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([offerId])
+}
+
+model OfferInclude {
+  id        String @id @default(cuid())
+  offerId   String
+  text      String
+  sortOrder Int    @default(0)
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([offerId])
+}
+
+model OfferExclude {
+  id        String @id @default(cuid())
+  offerId   String
+  text      String
+  sortOrder Int    @default(0)
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([offerId])
+}
+
+model OfferWhatToBring {
+  id        String @id @default(cuid())
+  offerId   String
+  text      String
+  sortOrder Int    @default(0)
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([offerId])
+}
+
+/**
+ * =========================
+ * Offer Price Tiers (Optional)
+ * =========================
+ */
+model OfferPriceTier {
+  id        String @id @default(cuid())
+  offerId   String
+  label     String // Adult / Child / VIP ...
+  price     Int
+  currency  String @default("SAR")
+  sortOrder Int    @default(0)
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([offerId])
+}
+
+/**
+ * =========================
+ * Blog
+ * =========================
+ */
+model BlogPost {
+  id            String  @id @default(cuid())
+  title         String
+  slug          String  @unique
+  excerpt       String? @default("")
+  content       String // HTML/Markdown
+  coverImageUrl String? @default("")
+  authorName    String? @default("")
+
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+
+  // Soft Delete
+  deletedAt     DateTime?
+
+  metaTitle       String? @default("")
+  metaDescription String? @default("")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tags BlogPostTag[]
+
+  @@index([publishedAt])
+  @@index([deletedAt])
+}
+
+model BlogTag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  posts BlogPostTag[]
+}
+
+model BlogPostTag {
+  postId String
+  tagId  String
+
+  post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag  BlogTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@index([tagId])
+}

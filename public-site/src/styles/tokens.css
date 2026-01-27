@@ -1,0 +1,113 @@
+/* ================================
+   Design Tokens – Alaswaf
+   ================================ */
+
+:root {
+  /* ===== Colors (Trust-first) ===== */
+  --bg: #f7f9fc;
+  --surface: #ffffff;
+  --surface-2: #f9fafb;
+
+  --text: #0f172a;
+  --muted: #64748b;
+
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  --primary: #0b2a4a; /* Navy */
+  --primary-2: #123a63;
+
+  --accent: #c9a24a; /* Gold */
+  --accent-2: #b48e3e;
+
+  --success: #16a34a;
+  --danger: #dc2626;
+
+  /* WhatsApp: استخدمه للـCTA فقط */
+  --whatsapp: #25d366;
+
+  /* ===== Typography ===== */
+  --font: "Cairo", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-15: 15px;
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-20: 20px;
+  --fs-24: 24px;
+  --fs-28: 28px;
+  --fs-36: 36px;
+  --fs-44: 44px;
+
+  /* ===== Spacing (8pt system) ===== */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+
+  /* ===== Radius ===== */
+  --r-10: 10px;
+  --r-12: 12px;
+  --r-14: 14px;
+  --r-16: 16px;
+  --r-18: 18px;
+  --r-22: 22px;
+  --r-pill: 999px;
+
+  /* ===== Shadows ===== */
+  --shadow-sm: 0 6px 18px rgba(2, 8, 23, 0.06);
+  --shadow-md: 0 10px 30px rgba(2, 8, 23, 0.08);
+  --shadow-lg: 0 16px 44px rgba(2, 8, 23, 0.12);
+
+  /* ===== Container ===== */
+  --container-max: 1280px;
+
+  /* ===== Z Index ===== */
+  --z-header: 50;
+  --z-modal: 80;
+  --z-toast: 90;
+
+  /* ===== Transitions ===== */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 150ms var(--ease);
+  --t-base: 240ms var(--ease);
+
+  /* ===== Focus Ring ===== */
+  --focus: 0 0 0 2px rgba(201, 162, 74, 0.55);
+
+  /* ===== Section Padding ===== */
+  --section-y: 48px;
+  --section-y-mobile: 34px;
+}
+
+/* (اختياري) Dark mode لو هتحتاجه مستقبلاً */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1220;
+    --surface: #0f172a;
+    --surface-2: #111c33;
+
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+
+    --border: #1f2a44;
+    --border-strong: #2a3a5e;
+
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+  }
+}

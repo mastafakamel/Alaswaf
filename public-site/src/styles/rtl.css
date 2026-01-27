@@ -1,0 +1,119 @@
+/* ================================
+   RTL – Alaswaf
+   ================================ */
+
+/* Base RTL direction */
+html[dir="rtl"] body {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Text alignment helpers */
+.text-start {
+  text-align: start;
+}
+.text-end {
+  text-align: end;
+}
+
+/* Ensure forms feel RTL */
+html[dir="rtl"] input,
+html[dir="rtl"] textarea {
+  text-align: right;
+}
+
+/* Placeholder alignment */
+html[dir="rtl"] ::placeholder {
+  text-align: right;
+}
+
+/* Lists & spacing (more natural in Arabic) */
+html[dir="rtl"] ul,
+html[dir="rtl"] ol {
+  padding-right: 1.2rem;
+  padding-left: 0;
+}
+
+/* Container is unchanged – but flex "start/end" behaves nicely */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+/* =================================
+     Icon flipping utilities
+     ================================= */
+
+/* Use this class on icons that should flip in RTL (chevrons/arrows) */
+html[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* Example: if you have an icon inside button */
+html[dir="rtl"] .btn .icon.rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* =================================
+     Drawer / Sheet direction (mobile menus)
+     ================================= */
+
+/* If you use a drawer, in RTL it should slide from the right */
+.drawer {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 8, 23, 0.45);
+  z-index: var(--z-modal);
+  display: none;
+}
+
+.drawer.open {
+  display: block;
+}
+
+.drawer-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: min(86vw, 360px);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-16);
+}
+
+/* RTL: drawer from right */
+html[dir="rtl"] .drawer-panel {
+  right: 0;
+}
+
+/* LTR fallback */
+html[dir="ltr"] .drawer-panel {
+  left: 0;
+}
+
+/* =================================
+     Common UI direction fixes
+     ================================= */
+
+/* Chips/Badges spacing natural in RTL */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+/* Ensure numbers are still readable */
+.num {
+  direction: ltr;
+  unicode-bidi: plaintext;
+}
+
+/* Keep phone numbers and URLs LTR inside RTL content */
+.phone,
+.url,
+.email {
+  direction: ltr;
+  unicode-bidi: plaintext;
+}

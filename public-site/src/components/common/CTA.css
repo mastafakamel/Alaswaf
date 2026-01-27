@@ -1,0 +1,115 @@
+/* CTA Section */
+.cta-section {
+    position: relative;
+    padding: var(--space-24) 0;
+    overflow: hidden;
+    background-color: #0b2a4a;
+}
+
+.cta-section__background {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/cta-pattern.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+}
+
+.cta-section__background::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(45, 140, 206, 0.9) 0%, rgba(11, 42, 74, 0.95) 100%);
+}
+
+.cta-section__content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: var(--text-inverse);
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: var(--space-8);
+}
+
+.cta-section__title {
+    font-size: var(--font-size-5xl);
+    font-weight: 900;
+    margin-bottom: var(--space-6);
+    line-height: 1.1;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    font-family: "Aref Ruqaa", sans-serif;
+}
+
+.cta-section__text {
+    font-size: var(--font-size-xl);
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: var(--space-10);
+    line-height: var(--line-height-relaxed);
+}
+
+.cta-section__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-6);
+}
+
+.cta-btn-outline {
+    background: transparent !important;
+    border: 2px solid var(--color-white) !important;
+    color: var(--color-white) !important;
+    backdrop-filter: blur(5px);
+}
+
+.cta-btn-outline:hover {
+    background: var(--color-white) !important;
+    color: var(--color-primary-dark) !important;
+    transform: translateY(-4px);
+}
+
+.cta-section__separator {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.cta-section__separator svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 100px;
+}
+
+.cta-section__separator .shape-fill {
+    fill: #0a0f1d;
+}
+
+@media (max-width: 768px) {
+    .cta-section {
+        padding: var(--space-16) 0 var(--space-12);
+    }
+
+    .cta-section__title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .cta-section__actions {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .cta-section__actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .cta-section__separator svg {
+        height: 60px;
+    }
+}
