@@ -56,6 +56,7 @@ app.use(express.json({ limit: "2mb" }));
 
 // ✅ Serve Static Uploads
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+// app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
 // CORS (Production-safe)
 const allowedOrigins = config.CORS_ORIGINS
